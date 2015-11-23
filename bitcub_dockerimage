@@ -7,12 +7,12 @@ COPY bitcub.conf /etc/apache2/sites-available/bitcub.conf
 RUN mkdir /var/www/bitcub/
 RUN a2dissite 000-default
 RUN a2ensite bitcub
-ADD https://github.com/xroussel/bitcub/releases/download/1.1.0/bitcub-1.1.0.tar.gz /var/www/bitcub/
+ADD https://github.com/xroussel/bitcub/releases/download/1.1.1/bitcub-1.1.1.tar.gz /var/www/bitcub/bitcub.tar.gz
 WORKDIR /var/www/bitcub/
-RUN tar -zxvf bitcub-1.1.0.tar.gz
+RUN tar -zxvf bitcub.tar.gz
 RUN echo "\r\n<Files "admin.php">\r\n Order allow,deny\r\n allow from all\r\n</Files>\r\n <FilesMatch \"admin.php\">\r\n AuthName \"Authentication required\"\r\n AuthType Basic\r\n AuthUserFile \"/etc/apache2/bitcub.htpasswd\"\r\n Require valid-user\r\n</FilesMatch>" >> .htaccess
 RUN chown -R www-data:www-data /var/www/bitcub/
-RUN rm /var/www/bitcub/bitcub-1.1.0.tar.gz
+RUN rm /var/www/bitcub/bitcub.tar.gz
 EXPOSE 80
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod 555 /entrypoint.sh
