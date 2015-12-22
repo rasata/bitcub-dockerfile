@@ -13,6 +13,9 @@ RUN tar -zxvf bitcub.tar.gz
 RUN echo "\r\n<Files "admin.php">\r\n Order allow,deny\r\n allow from all\r\n</Files>\r\n <FilesMatch \"admin.php\">\r\n AuthName \"Authentication required\"\r\n AuthType Basic\r\n AuthUserFile \"/etc/apache2/bitcub.htpasswd\"\r\n Require valid-user\r\n</FilesMatch>" >> .htaccess
 RUN chown -R www-data:www-data /var/www/bitcub/
 RUN rm /var/www/bitcub/bitcub.tar.gz
+VOLUME /var/www/bitcub/db/
+VOLUME /var/www/bitcub/files/
+RUN usermod -u 1000 www-data
 EXPOSE 80
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod 555 /entrypoint.sh
